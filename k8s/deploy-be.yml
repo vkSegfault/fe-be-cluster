@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-be
+  labels:
+    app: flask-be
+  namespace: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-be
+  template:
+    metadata:
+      labels:
+        app: flask-be
+    spec:
+      containers:
+      - name: flask-be
+        image: vksegfault/be:1
+        ports:
+        - containerPort: 5000

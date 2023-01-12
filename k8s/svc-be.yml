@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-be
+  namespace: myapp
+  labels:
+    app: svc-be
+spec:
+  selector:
+    app: flask-be
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000

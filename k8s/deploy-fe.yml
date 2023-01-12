@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-fe
+  labels:
+    app: react-fe
+  namespace: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: react-fe
+  template:
+    metadata:
+      labels:
+        app: react-fe
+    spec:
+      containers:
+      - name: react-fe
+        image: vksegfault/fe:2
+        ports:
+        - containerPort: 3000
