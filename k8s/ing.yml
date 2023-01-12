@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: svc-fe-ing
+  name: ing-fe
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
   namespace: myapp
