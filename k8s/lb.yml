@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-fe
+  name: lb-fe
   namespace: myapp
   labels:
-    kubernetes.io/service-name: svc-fe
+    kubernetes.io/service-name: lb-fe
 spec:
-  # type: NodePort
+  type: LoadBalancer
   selector:
     app: react-fe
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-      # nodePort: 30007
+      nodePort: 30007

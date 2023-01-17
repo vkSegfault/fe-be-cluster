@@ -1,11 +1,9 @@
-FROM node:18.12.1-bullseye
-
+FROM node:18.12.1-bullseye AS builder
 WORKDIR /app
-
 COPY . /app
-
 RUN npm install
+RUN npm run build
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+FROM nginx:1.23.3
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
