@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: react-fe
-        image: vksegfault/fe:4
+        image: vksegfault/fe:7
         ports:
         - containerPort: 80
