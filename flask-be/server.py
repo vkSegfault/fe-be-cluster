@@ -8,7 +8,7 @@ CORS(app)
 def hello_geek():
     return '<h1>Hello from Flask & Docker</h2>'
 
-@app.route('/members')
+@app.route('/members/')
 def members():
     res = jsonify({"members": "Adrian"})
     res.headers.add('Access-Control-Allow-Origin', '*')
