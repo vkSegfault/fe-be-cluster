@@ -12,7 +12,8 @@ function App() {
     axios({
       method: "GET",
       //url:"http://svc-be:5000/members/",   // 'svc-be' is a name of a service attached to deployment but it's inside cluster and we need to access API from outside
-      url:"https://192.168.49.2/members/",   //port is not needed because it's accessed through Ingress so by default 80 
+      //url:"http://192.168.49.2/members/",   //port is not needed because it's accessed through Ingress so by default 80 
+      url:"https://app.pl/members/",   // if we are using ssl termination then we can't use IP no longer (ip adress is not terminated) but need to use DNS instead (which is terminated by ingress)
     })
     .then((response) => {
       const res = response.data;

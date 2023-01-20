@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: flask-be
-        image: vksegfault/be:3
+        image: vksegfault/be:4
         ports:
         - containerPort: 5000
