@@ -12,7 +12,7 @@ function App() {
     axios({
       method: "GET",
       //url:"http://svc-be:5000/members/",   // 'svc-be' is a name of a service attached to deployment but it's inside cluster and we need to access API from outside
-      url:"http://192.168.49.2/members/",   //port is not needed because it's accessed through Ingress so by default 80 
+      url:"https://192.168.49.2/members/",   //port is not needed because it's accessed through Ingress so by default 80 
     })
     .then((response) => {
       const res = response.data;

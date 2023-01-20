@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: vksegfault/nginx:5
+        image: vksegfault/nginx:14
         ports:
         - containerPort: 80

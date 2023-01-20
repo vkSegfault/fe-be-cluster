@@ -8,8 +8,13 @@ metadata:
     #nginx.ingress.kubernetes.io/rewrite-target: /
   namespace: myapp
 spec:
+  tls:
+    - hosts:
+        - app.pl
+      secretName: cert-secret
   rules:
-  - http:
+  - host: app.pl
+    http:
       paths:
       - path: /
         pathType: Prefix
