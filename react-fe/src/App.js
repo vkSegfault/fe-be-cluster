@@ -3,8 +3,8 @@ import axios from "axios";
 import logo from './logo.svg';
 import './App.css';
 
-import Hello2 from './components/test';
-import Message from './components/message';
+import Hello from './components/function';
+import Message from './components/class';
 
 function App() {
 
@@ -35,8 +35,11 @@ function App() {
 
   return (
     <div className="App">
-      <Hello2></Hello2>
-      <Message/>
+      <Hello msg="Dupa">
+        <h3>This is children, referneced in function as `children'</h3>
+      </Hello>
+      <Hello msg="Mamuta" arg2="aaaa" />
+      <Message arg1="23"/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
