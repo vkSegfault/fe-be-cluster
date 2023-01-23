@@ -6,7 +6,7 @@ metadata:
     ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/preserve-trailing-slash: "false"
     #nginx.ingress.kubernetes.io/rewrite-target: /
-  namespace: myapp
+  namespace: dev
 spec:
   tls:
     - hosts:
@@ -30,3 +30,10 @@ spec:
             name: svc-be
             port:
               number: 5000
+      - path: /prometheus/
+        pathType: Prefix
+        backend:
+          service:
+            name: svc-prometheus
+            port:
+              number: 8080

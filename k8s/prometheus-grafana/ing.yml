@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ing-prometheus-ui
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/preserve-trailing-slash: "false"
+  namespace: ops
+spec:
+  # tls:
+  #   - hosts:
+  #       - app.pl
+  #     secretName: cert-secret   # note: cert secret is in `myapp` ns
+  rules:
+  #- host: app.pl
+  - http:
+      paths:
+      - path: /prometheus/
+        pathType: Prefix
+        backend:
+          service:
+            name: prometheus-service
+            port:
+              number: 8080

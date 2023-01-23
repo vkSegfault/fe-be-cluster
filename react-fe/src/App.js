@@ -3,6 +3,9 @@ import axios from "axios";
 import logo from './logo.svg';
 import './App.css';
 
+import Hello2 from './components/test';
+import Message from './components/message';
+
 function App() {
 
    // new line start
@@ -32,6 +35,8 @@ function App() {
 
   return (
     <div className="App">
+      <Hello2></Hello2>
+      <Message/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
