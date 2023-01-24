@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "==2.2.2"
+flask-cors = "==3.0.10"
+flask-sqlalchemy = "==3.0.2"
+psycopg2-binary = "==2.9.5"
+python-decouple = "*"
+connexion = {extras = ["swagger-ui"], version = "*"}
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
+python_full_version = "3.11.1"
