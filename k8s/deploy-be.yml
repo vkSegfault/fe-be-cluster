@@ -17,6 +17,12 @@ spec:
     spec:
       containers:
       - name: flask-be
-        image: vksegfault/be:4
+        image: vksegfault/be:9
         ports:
         - containerPort: 5000
+        livenessProbe:
+          httpGet:
+            path: /health/
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
