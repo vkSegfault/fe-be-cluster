@@ -1,5 +1,5 @@
 def read_all():
-    pass
+    return "People", 200
 
 def create():
     pass

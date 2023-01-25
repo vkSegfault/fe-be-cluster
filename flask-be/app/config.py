@@ -8,6 +8,7 @@ class DevConfig(Config):
     DEBUG = True
     SQLACHEMY_ECHO = True   # print SQL commands when executed
     SQLALCHEMY_DATABASE_URI = f"postgresql://{config('DB_USERNAME')}:{config('DB_PASSWORD')}@localhost:5432/{config('DB_NAME')}"
+    SECRET_KEY = config('SECRET_KEY')
 
 class ProdConfig(Config):
     pass

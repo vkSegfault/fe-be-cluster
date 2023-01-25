@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Homepage </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    </head>
+
+    <body>
+        <h1> Homepage </h1>
+        <p1> Homepage </p1>
+
+        <img src="{{ url_for('static', filename='logo512.png') }}" alt="">
+
+        <button type="button">
+            <form method="get" action="/auth/login">
+                <input type="submit" value="Login">
+            </form>
+        </button>
+    </body>
+</html>
