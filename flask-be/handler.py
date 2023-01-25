@@ -1,3 +1,5 @@
+### neded by Connexion lib for Swagger
+
 def read_all():
     return "People", 200
 

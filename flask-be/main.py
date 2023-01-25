@@ -1,7 +1,6 @@
-from app.app import create_app
+from app.app import create_app, create_tables, add_user
 
 app = create_app()
-
 
 
 # @app.route('/', methods=['GET'])
@@ -36,6 +35,7 @@ app = create_app()
 #         pass
 
 if __name__ == "__main__":
-#     # with app.app_context():
-#     #     db.create_all()
+    with app.app_context():
+        create_tables()
+        add_user()
     app.run(host="127.0.0.1", port=5000)   # , ssl_context=('crt.pem', 'key.pem')
