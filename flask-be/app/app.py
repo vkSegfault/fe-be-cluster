@@ -4,7 +4,8 @@ import connexion
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists
-from sqlalchemy import create_engine, inspect
+from sqlalchemy import create_engine, inspect, MetaData
+from sqlalchemy.ext.declarative import declarative_base
 from flask_cors import CORS
 from . import config
 
@@ -44,6 +45,7 @@ def get_db_engine():
     #engine = create_engine(url, pool_size=50, echo=True)
 
 def create_tables():
+    # creates all tables defined in models.py
     db.create_all()
 
 def add_user():
@@ -54,4 +56,16 @@ def add_user():
 def get_tables():
     url = config.DevConfig.SQLALCHEMY_DATABASE_URI
     engine = create_engine(url)
-    
+    inspector = inspect(engine)
+    tables = inspector.get_table_names()
+    return tables
+
+def drop_table(table_name: str):
+    url = config.DevConfig.SQLALCHEMY_DATABASE_URI
+    engine = create_engine(url)
+    base = declarative_base()
+    metadata = MetaData()
+    metadata.reflect(bind=engine)
+    table = metadata.tables[table_name]
+    if table is not None:
+        base.metadata.drop_all(engine, [table], checkfirst=True)

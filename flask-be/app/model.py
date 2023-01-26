@@ -2,13 +2,13 @@ from .app import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     __table_args__ = ( db.UniqueConstraint('name'),)
 
     id = db.Column(db.Integer(), primary_key=True)
-    # unique may be ignored when DB has been created without it (either create new one from Docker, or drop it and create new one with sqlalchemy)
-    name = db.Column(db.String(200), unique=True, nullable=False)
+    name = db.Column(db.String(200), unique=True, nullable=False)   # table must be created with `unique=True` constraint to actually block any dups (creating table without it first will not work)
     money = db.Column(db.Integer())
     note = db.relationship('Note')
 
@@ -37,6 +37,7 @@ class User(db.Model, UserMixin):
     def update(self, name, money):
         self.name = name
         self.money = money
+
 
 class Note(db.Model):
     __tablename__ = 'notes'
