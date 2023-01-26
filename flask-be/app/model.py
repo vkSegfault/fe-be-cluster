@@ -7,6 +7,7 @@ class User(db.Model, UserMixin):
     __table_args__ = ( db.UniqueConstraint('name'),)
 
     id = db.Column(db.Integer(), primary_key=True)
+    # unique may be ignored when DB has been created without it (either create new one from Docker, or drop it and create new one with sqlalchemy)
     name = db.Column(db.String(200), unique=True, nullable=False)
     money = db.Column(db.Integer())
     note = db.relationship('Note')

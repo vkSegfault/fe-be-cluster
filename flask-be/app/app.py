@@ -4,6 +4,7 @@ import connexion
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists
+from sqlalchemy import create_engine, inspect
 from flask_cors import CORS
 from . import config
 
@@ -49,3 +50,8 @@ def add_user():
     from . import model
     user = model.User('Janusz', 520)
     user.add()
+
+def get_tables():
+    url = config.DevConfig.SQLALCHEMY_DATABASE_URI
+    engine = create_engine(url)
+    
