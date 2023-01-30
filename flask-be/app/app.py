@@ -3,6 +3,7 @@
 import connexion
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 from sqlalchemy_utils import database_exists
 from sqlalchemy import create_engine, inspect, MetaData
 from sqlalchemy.ext.declarative import declarative_base
@@ -20,7 +21,7 @@ def create_app():
     app.config.from_object(config.DevConfig)
 
     db.init_app(app)
-    
+
     CORS(app)
 
     from .view import view
@@ -31,6 +32,14 @@ def create_app():
     app.register_blueprint(api, url_prefix='/api')
 
     from .model import User, Note
+
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'   # if not logged forward there: auth is a file, login is func in this file
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(id):
+        return db.Query.get(int(id))
 
     return app
 
@@ -44,13 +53,14 @@ def get_db_engine():
     is_db_running(url)
     #engine = create_engine(url, pool_size=50, echo=True)
 
-def create_tables():
-    # creates all tables defined in models.py
+def create_db():
+    """Must be called withing `with app.app_context():`"""
+    # creates db with all tables defined in models.py
     db.create_all()
 
-def add_user():
+def add_user(name: str, money: int):
     from . import model
-    user = model.User('Janusz', 520)
+    user = model.User(str(name), money)
     user.add()
 
 def get_tables():
@@ -69,3 +79,15 @@ def drop_table(table_name: str):
     table = metadata.tables[table_name]
     if table is not None:
         base.metadata.drop_all(engine, [table], checkfirst=True)
+
+def update(name: str, money: int):
+    url = config.DevConfig.SQLALCHEMY_DATABASE_URI
+    engine = create_engine(url)
+    base = declarative_base()
+    metadata = MetaData()
+    metadata.reflect(bind=engine)
+
+    #user.update(name, money)
+
+def exist():
+    from .model import User

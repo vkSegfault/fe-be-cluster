@@ -1,6 +1,9 @@
-### view for authorization ###
+"""view for authorization"""
+
+from flask_login import login_required
 
 from flask import Blueprint
+from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint("auth", __name__)
 
@@ -8,6 +11,7 @@ auth = Blueprint("auth", __name__)
 def login():
     return "<p>Login</p>"
 
+@login_required   # we need to be logged in to actually access this endpoint
 @auth.route('/logout')
 def logout():
     return "<p>Logout</p>"

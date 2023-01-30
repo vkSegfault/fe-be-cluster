@@ -1,7 +1,8 @@
-from .app import db
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+db = SQLAlchemy()
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -16,6 +17,9 @@ class User(db.Model, UserMixin):
         super().__init__()
         self.name = name
         self.money = money
+
+    def __init__(self) -> None:
+        super().__init__()
 
     def __repr__(self) -> str:
         return f'ID: {self.id}'
@@ -37,6 +41,14 @@ class User(db.Model, UserMixin):
     def update(self, name, money):
         self.name = name
         self.money = money
+        user = self.query.get(name)
+        print(user)
+        db.session.commit()   # is this enough to update ?
+
+    def exist(name: str):
+        user = db.Query.filter_by(name=name).first()
+        if user:   # if there is not user in DB None will be returned
+            print( user )
 
 
 class Note(db.Model):
