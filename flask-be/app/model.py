@@ -9,9 +9,9 @@ class User(db.Model, UserMixin):
     __table_args__ = ( db.UniqueConstraint('name'),)
 
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(200), unique=True, nullable=False)   # table must be created with `unique=True` constraint to actually block any dups (creating table without it first will not work)
-    money = db.Column(db.Integer())
-    note = db.relationship('Note')
+    name = db.Column(db.String(length=200), unique=True, nullable=False)   # table must be created with `unique=True` constraint to actually block any dups (creating table without it first will not work)
+    money = db.Column(db.Integer(), default=0)
+    note = db.relationship('Note', backref='ownee', lazy=True)   # user owns a note
 
     def __init__(self, name: str, money: int) -> None:
         super().__init__()
@@ -24,8 +24,13 @@ class User(db.Model, UserMixin):
     def __repr__(self) -> str:
         return f'ID: {self.id}'
 
-    def read_all():
-        pass
+    def read_all(self):
+        all = self.query.all()
+        return all
+
+    def read_one(self, name):
+        one = self.query.filter_by(name=name)   # name is unique so it will be always one, for many we need to iterate over
+        return one
 
     def add(self):
         # if db.session.query(self).filter(name='Janusz').exists():

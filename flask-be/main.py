@@ -1,4 +1,4 @@
-from app.app import create_app, create_db, add_user, get_tables, drop_table
+from app.app_controller import create_app, create_tables, add_user, get_tables, drop_table
 
 app = create_app()
 
@@ -36,7 +36,7 @@ app = create_app()
 
 if __name__ == "__main__":
     with app.app_context():
-        create_db()
+        create_tables()
         #add_user('Ardian', 440)
         print( f'Table names before drop: { get_tables() }')
         #drop_table('notes')

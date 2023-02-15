@@ -1,0 +1,5 @@
+{% extends 'home.html' %}
+{% block greeting %}
+    <p1> This is overriden from base html </p1>
+    <a class="btn" href="{{ url_for('view.home') }}">Redirect to homepage</a>
+{% endblock %}

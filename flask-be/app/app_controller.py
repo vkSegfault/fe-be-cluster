@@ -25,8 +25,8 @@ def create_app():
     CORS(app)
 
     from .view import view
-    from .auth import auth
-    from .api import api
+    from .api_auth import auth
+    from .api_base import api
     app.register_blueprint(view, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/auth/')
     app.register_blueprint(api, url_prefix='/api')
@@ -53,10 +53,14 @@ def get_db_engine():
     is_db_running(url)
     #engine = create_engine(url, pool_size=50, echo=True)
 
-def create_db():
-    """Must be called withing `with app.app_context():`"""
-    # creates db with all tables defined in models.py
+def create_tables():
+    """Must be called within `with app.app_context():`"""
+    # creates all tables defined in models.py inside connected DB
     db.create_all()
+
+def drop_tables():
+    """Must be called within `with app.app_context():`"""
+    db.drop_all()
 
 def add_user(name: str, money: int):
     from . import model

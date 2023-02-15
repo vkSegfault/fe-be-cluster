@@ -1,6 +1,6 @@
 ### view from MVC ###
 
-from flask import Blueprint, request, flash
+from flask import Blueprint, request, flash, render_template
 
 api = Blueprint('api', __name__)
 
@@ -15,3 +15,7 @@ def home():
         if len(name) < 2:
             flash("Name is suspicioulsy short, enter somehting longer, category='error'")
         return "This should be POST handled " + str(name)
+    
+@api.route('/subpage', methods=['GET'])
+def subpage():
+    return render_template("subpage.html")
