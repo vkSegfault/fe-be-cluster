@@ -14,8 +14,12 @@
         {{ form.errors }}
     {% endif %}
 
+    {% for entry in data %}
+        <p1> {{ entry }} </p1>
+    {% endfor %}
     <br>
 
+    <!-- for basic POST -->
     <label for="title">Title</label>
     <br>
     <input type="text" name="title"

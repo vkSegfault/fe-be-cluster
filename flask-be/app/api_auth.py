@@ -20,7 +20,8 @@ def register():
         username = form.username.data   # field_name.data from our child Form class and .data is how we fetch data from html submit field
         print(f'Data from POST: {username}')
         # add this user to DB
-        return redirect( url_for('view.home') )
+        # return redirect( url_for('view.home') )
+        return render_template( 'register.html', form=form, data=username )
     else:
         print("WebForm validation failed")
         if form.errors != {}:
