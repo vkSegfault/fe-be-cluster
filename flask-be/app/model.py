@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from .app_controller import bcrypt
 
 db = SQLAlchemy()
 
@@ -10,8 +11,17 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(length=200), unique=True, nullable=False)   # table must be created with `unique=True` constraint to actually block any dups (creating table without it first will not work)
+    password_hash =db.Column(db.String(length=50), nullable=False)
     money = db.Column(db.Integer(), default=0)
     note = db.relationship('Note', backref='ownee', lazy=True)   # user owns a note
+
+    @property
+    def password(self):
+        return self.password
+    
+    @password.setter
+    def password(self, plain_text_password):
+        self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
 
     def __init__(self, name: str, money: int) -> None:
         super().__init__()
@@ -29,7 +39,7 @@ class User(db.Model, UserMixin):
         return all
 
     def read_one(self, name):
-        one = self.query.filter_by(name=name)   # name is unique so it will be always one, for many we need to iterate over
+        one = self.query.filter_by(name=name).first()   # name is unique so it will be always one, for many we need to iterate over
         return one
 
     def add(self):

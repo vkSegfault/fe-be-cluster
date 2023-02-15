@@ -10,6 +10,7 @@ flask-sqlalchemy = "==3.0.2"
 flask-login = "*"
 flask-wtf = "*"
 Flask-WTF = "*"
+flask_bcrypt = "*"
 psycopg2-binary = "==2.9.5"
 python-decouple = "*"
 connexion = {extras = ["swagger-ui"], version = "*"}
