@@ -3,7 +3,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from .view_forms import RegisterForm
+from .view_forms import RegisterForm, LoginForm
 
 auth = Blueprint("auth", __name__)
 
@@ -37,7 +37,8 @@ def register():
 
 @auth.route('/login')
 def login():
-    return "<p>Login</p>"
+    form = LoginForm()
+    return render_template("login.html", form=form)
 
 @login_required   # we need to be logged in to actually access this endpoint
 @auth.route('/logout')
