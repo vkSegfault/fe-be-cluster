@@ -1,9 +1,10 @@
 """view for authorization"""
 
-from flask import Blueprint, render_template, redirect, url_for, request
-from flask_login import login_required
+from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask_login import login_required, login_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .view_forms import RegisterForm, LoginForm
+from .model import User
 
 auth = Blueprint("auth", __name__)
 
@@ -35,9 +36,19 @@ def register():
     #     return redirect( url_for('view.home') )
     return render_template("register.html", form=form)
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        print('OnSubmit validation passed')
+        # query user from db based on provided username
+        user = User.query.filter_by(name=form.username.data).first()
+        print(f'User is {user}')
+        if user and user.verify_password(form.password.data):
+            print('User exists and password matches')
+            #login_user(user)
+            flash(f"Successfuly logged in as {user.name}")   # not working, we need to implement it on HTML side
+            render_template("login.html", form=form, msg=f"Logged in successfully as {user.name}")
     return render_template("login.html", form=form)
 
 @login_required   # we need to be logged in to actually access this endpoint

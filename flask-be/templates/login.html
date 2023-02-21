@@ -8,6 +8,27 @@
 
 	{{ form.username.label }}   <!-- display label called `username` -->
 	{{ form.username(class="form-control", placeholder="User Name") }}   <!-- take input from user here, we can then fetch it from Flask with `form.username.data -->
+    {{ form.password.label }}   <!-- display label called `username` -->
+	{{ form.password(class="form-control", placeholder="User Name") }}   <!-- take input from user here, we can then fetch it from Flask with `form.username.data -->
+
+    <!-- implementation of flash() function from Flask -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <div class="message_flash">{{ message }}</div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- print data passed from Flask -->
+    {% for entry in msg %}
+        <p1> {{ entry }} </p1>
+    {% endfor %}
+
+    <br>
+
     <br>
     {{ form.submit(class='btn btn-lg btn-primary') }}
     {% if form.errors %}
@@ -20,7 +41,7 @@
     <br>
 
     <div class="checkbox mb-3">
-        <h6>Do not have an account?</h6>
+        <h6>Don't have an account?</h6>
         <a class="btn btn-small btn-secondary" href="{{ url_for('auth.register') }}">Register</a>
     </div>
 

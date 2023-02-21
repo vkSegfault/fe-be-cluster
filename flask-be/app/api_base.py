@@ -13,7 +13,7 @@ def home():
         name = data['name']
         print(len(name))
         if len(name) < 2:
-            flash("Name is suspicioulsy short, enter somehting longer, category='error'")
+            flash("Name is suspicioulsy short, enter something longer, category='error'")
         return "This should be POST handled " + str(name)
     
 @api.route('/subpage', methods=['GET'])

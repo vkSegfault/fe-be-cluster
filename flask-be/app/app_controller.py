@@ -34,13 +34,13 @@ app.register_blueprint(api, url_prefix='/api')
 
 from .model import User, Note
 
-login_manager = LoginManager()
-login_manager.login_view = 'auth.login'   # if not logged forward there: auth is a file, login is func in this file
-login_manager.init_app(app)
+# login_manager = LoginManager()
+# login_manager.login_view = 'api_auth.login'   # if not logged forward there: auth is a file, login is func in this file
+# login_manager.init_app(app)
 
-@login_manager.user_loader
-def load_user(id):
-    return db.Query.get(int(id))
+# @login_manager.user_loader
+# def load_user(id):
+#     return db.Query.get(int(id))
 
 
 #####################
@@ -64,10 +64,13 @@ def drop_tables():
     """Must be called within `with app.app_context():`"""
     db.drop_all()
 
-def add_user(name: str, money: int):
-    from . import model
-    user = model.User(str(name), money)
-    user.add()
+def add_user(name: str, password: str,  money: int):
+    from .model import User
+    if not User.query.filter_by(name=name).first():   # if there is no such user
+        user = User(name=str(name), password=str(password), money=money)
+        user.add()
+    else:
+        print("User exists... skipping")
 
 def get_tables():
     url = config.DevConfig.SQLALCHEMY_DATABASE_URI
@@ -82,7 +85,11 @@ def drop_table(table_name: str):
     base = declarative_base()
     metadata = MetaData()
     metadata.reflect(bind=engine)
-    table = metadata.tables[table_name]
+    try:
+        table = metadata.tables[table_name]
+    except KeyError as e:
+        print(f"No Table named: {table_name}")
+        return None
     if table is not None:
         base.metadata.drop_all(engine, [table], checkfirst=True)
 
