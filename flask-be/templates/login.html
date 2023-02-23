@@ -1,4 +1,5 @@
 {% extends 'home.html' %}
+{% include 'include/modals.html' %}
 {% block greeting %}
 <p1> This is overriden from base html </p1>
 <a class="btn" href="{{ url_for('view.home') }}">Redirect to homepage</a>
@@ -11,21 +12,24 @@
     {{ form.password.label }}   <!-- display label called `username` -->
 	{{ form.password(class="form-control", placeholder="User Name") }}   <!-- take input from user here, we can then fetch it from Flask with `form.username.data -->
 
+    <!-- print data passed from Flask -->
+    {{ form.msg.label }}
+    {% for entry in msg %}
+        <p1> {{ entry }} </p1>
+    {% endfor %}
+
+
     <!-- implementation of flash() function from Flask -->
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul class="flashes">
                 {% for message in messages %}
-                    <div class="message_flash">{{ message }}</div>
+                    <div class="alert_error">{{ message }}</div>
                 {% endfor %}
             </ul>
         {% endif %}
     {% endwith %}
 
-    <!-- print data passed from Flask -->
-    {% for entry in msg %}
-        <p1> {{ entry }} </p1>
-    {% endfor %}
 
     <br>
 
@@ -42,7 +46,7 @@
 
     <div class="checkbox mb-3">
         <h6>Don't have an account?</h6>
-        <a class="btn btn-small btn-secondary" href="{{ url_for('auth.register') }}">Register</a>
+        <a class="btn btn-small btn-secondary" data-toggle="modal" data-target="Modal-Box" href="{{ url_for('auth.register') }}">Register</a>
     </div>
 
 </form>

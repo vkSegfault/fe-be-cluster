@@ -25,7 +25,7 @@ db.init_app(app)
 CORS(app)
 bcrypt = Bcrypt(app)
 
-from .view import view
+from .api_view import view
 from .api_auth import auth
 from .api_base import api
 app.register_blueprint(view, url_prefix='/')
@@ -34,13 +34,17 @@ app.register_blueprint(api, url_prefix='/api')
 
 from .model import User, Note
 
-# login_manager = LoginManager()
-# login_manager.login_view = 'api_auth.login'   # if not logged forward there: auth is a file, login is func in this file
-# login_manager.init_app(app)
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'   # if not logged in forward all Unauthorized there: auth is a bluprint object name, login is func in this file
+login_manager.login_message_category = 'info'
+login_manager.init_app(app)
 
-# @login_manager.user_loader
-# def load_user(id):
-#     return db.Query.get(int(id))
+@login_manager.user_loader
+def load_user(id):
+    user = User.query.filter_by(id=int(id)).first()
+    # user = User.query.get(int(id))   # equivalnet to above
+    print(user)
+    return user
 
 
 #####################
